@@ -1,0 +1,38 @@
+[
+  {
+    "date": "2026-01-03",
+    "amount": "₹320",
+    "description": "Swiggy order"
+  },
+  {
+    "date": "2026-01-05",
+    "amount": "₹540",
+    "description": "Uber ride"
+  },
+  {
+    "date": "2026-01-08",
+    "amount": "₹50000",
+    "description": "Salary Credit",
+    "type": "credit"
+  },
+  {
+    "date": "2026-01-11",
+    "amount": "₹799",
+    "description": "Spotify subscription"
+  },
+  {
+    "date": "2026-02-11",
+    "amount": "₹799",
+    "description": "Spotify subscription"
+  },
+  {
+    "date": "2026-03-11",
+    "amount": "₹799",
+    "description": "Spotify subscription"
+  },
+  {
+    "date": "2026-03-18",
+    "amount": "₹15000",
+    "description": "Luxury shopping splurge"
+  }
+]

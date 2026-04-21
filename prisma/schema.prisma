@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UploadSource {
+  CSV
+  GOOGLE_SHEET
+  API
+}
+
+enum TransactionType {
+  DEBIT
+  CREDIT
+}
+
+enum PipelineStatus {
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+enum AlertSeverity {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+model User {
+  id              String           @id @default(cuid())
+  name            String
+  email           String           @unique
+  passwordHash    String           @map("password_hash")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+  rawTransactions RawTransaction[]
+  transactions    Transaction[]
+  insight         Insight?
+  budgets         Budget[]
+  goals           Goal[]
+  pipelineLogs    PipelineLog[]
+  alerts          Alert[]
+
+  @@map("users")
+}
+
+model RawTransaction {
+  id          String       @id @default(cuid())
+  userId      String       @map("user_id")
+  source      UploadSource
+  rawJson     Json         @map("raw_json")
+  fileName    String?      @map("file_name")
+  uploadedAt  DateTime     @default(now()) @map("uploaded_at")
+  pipelineLog PipelineLog? @relation(fields: [pipelineLogId], references: [id])
+  pipelineLogId String?    @map("pipeline_log_id")
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, uploadedAt])
+  @@map("raw_transactions")
+}
+
+model Transaction {
+  id                 String          @id @default(cuid())
+  userId             String          @map("user_id")
+  amount             Float
+  currency           String          @default("INR")
+  date               DateTime
+  category           String
+  normalizedCategory String?         @map("normalized_category")
+  merchant           String
+  description        String?
+  type               TransactionType
+  source             UploadSource
+  isRecurring        Boolean         @default(false) @map("is_recurring")
+  isAnomaly          Boolean         @default(false) @map("is_anomaly")
+  metadata           Json?
+  createdAt          DateTime        @default(now()) @map("created_at")
+  updatedAt          DateTime        @updatedAt @map("updated_at")
+  user               User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+  @@index([userId, category])
+  @@map("transactions")
+}
+
+model Insight {
+  id             String   @id @default(cuid())
+  userId         String   @unique @map("user_id")
+  financialScore Int      @map("financial_score")
+  persona        String
+  flags          Json
+  summaryJson    Json     @map("summary_json")
+  explanation    Json
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("insights")
+}
+
+model Budget {
+  id         String   @id @default(cuid())
+  userId     String   @map("user_id")
+  category   String
+  limit      Float
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, category])
+  @@map("budgets")
+}
+
+model Goal {
+  id            String   @id @default(cuid())
+  userId        String   @map("user_id")
+  name          String
+  targetAmount  Float    @map("target_amount")
+  currentAmount Float    @default(0) @map("current_amount")
+  deadline      DateTime
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("goals")
+}
+
+model PipelineLog {
+  id            String         @id @default(cuid())
+  userId        String         @map("user_id")
+  source        UploadSource?
+  status        PipelineStatus
+  startedAt     DateTime       @default(now()) @map("started_at")
+  finishedAt    DateTime?      @map("finished_at")
+  rowsProcessed Int            @default(0) @map("rows_processed")
+  errorMessage  String?        @map("error_message")
+  metadata      Json?
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rawTransactions RawTransaction[]
+
+  @@index([userId, startedAt])
+  @@map("pipeline_logs")
+}
+
+model Alert {
+  id        String        @id @default(cuid())
+  userId    String        @map("user_id")
+  title     String
+  message   String
+  type      String
+  severity  AlertSeverity
+  isRead    Boolean       @default(false) @map("is_read")
+  metadata  Json?
+  createdAt DateTime      @default(now()) @map("created_at")
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@map("alerts")
+}

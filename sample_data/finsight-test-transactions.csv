@@ -1,0 +1,39 @@
+date,amount,description,merchant,category,currency,type
+2026-01-01,52000,Monthly salary credit,Salary Credit,,INR,credit
+2026-01-03,349,Swiggy late night dinner,Swiggy,,INR,debit
+2026-01-04,2800,BigBasket grocery order,BigBasket,,INR,debit
+2026-01-05,420,Uber office commute,Uber,,INR,debit
+2026-01-08,1250,Electricity bill payment,Electricity Board,Utilities,INR,debit
+2026-01-11,799,Spotify monthly subscription,Spotify,,INR,debit
+2026-01-14,610,Zomato lunch order,Zomato,,INR,debit
+2026-01-18,1550,Amazon home essentials,Amazon,,INR,debit
+2026-01-25,450,Uber weekend ride,Uber,,INR,debit
+2026-02-01,52000,Monthly salary credit,Salary Credit,,INR,credit
+2026-02-02,3100,BigBasket monthly groceries,BigBasket,,INR,debit
+2026-02-06,520,Ola ride to airport,Ola,,INR,debit
+2026-02-09,699,Swiggy dinner order,Swiggy,,INR,debit
+2026-02-11,799,Spotify monthly subscription,Spotify,,INR,debit
+2026-02-14,920,Dinner at cafe,Cafe Delhi,,INR,debit
+2026-02-16,1499,Amazon electronics accessory,Amazon,,INR,debit
+2026-02-22,480,Zomato late night snacks,Zomato,,INR,debit
+2026-02-26,1350,Internet broadband bill,ACT Broadband,Utilities,INR,debit
+2026-03-01,52000,Monthly salary credit,Salary Credit,,INR,credit
+2026-03-03,2950,BigBasket grocery refill,BigBasket,,INR,debit
+2026-03-07,430,Uber ride to client meeting,Uber,,INR,debit
+2026-03-09,745,Swiggy dinner order,Swiggy,,INR,debit
+2026-03-11,799,Spotify monthly subscription,Spotify,,INR,debit
+2026-03-15,15600,Premium fashion purchase,Luxury Store,,INR,debit
+2026-03-20,510,Zomato late night order,Zomato,,INR,debit
+2026-03-23,1600,MedPlus pharmacy purchase,MedPlus,,INR,debit
+2026-03-27,1400,Internet broadband bill,ACT Broadband,Utilities,INR,debit
+2026-03-29,650,Uber weekend trip,Uber,,INR,debit
+2026-04-01,52000,Monthly salary credit,Salary Credit,,INR,credit
+2026-04-02,3300,BigBasket monthly groceries,BigBasket,,INR,debit
+2026-04-05,560,Ola ride to metro,Ola,,INR,debit
+2026-04-08,850,Dinner with friends,Restaurant Local,,INR,debit
+2026-04-11,799,Spotify monthly subscription,Spotify,,INR,debit
+2026-04-12,599,Swiggy late night dinner,Swiggy,,INR,debit
+2026-04-18,2300,Amazon shopping order,Amazon,,INR,debit
+2026-04-20,1420,MedPlus pharmacy purchase,MedPlus,,INR,debit
+2026-04-24,1380,Internet broadband bill,ACT Broadband,Utilities,INR,debit
+2026-04-26,720,Zomato late night snacks,Zomato,,INR,debit
