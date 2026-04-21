@@ -6,6 +6,8 @@ import { prisma } from "@/lib/db";
 import { setAuthCookie, signAuthToken } from "@/lib/session";
 import { signupSchema } from "@/lib/validators";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();

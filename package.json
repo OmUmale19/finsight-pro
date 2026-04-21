@@ -13,7 +13,8 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:seed": "tsx prisma/seed.ts",
     "etl:demo": "python etl/etl_pipeline.py --input etl/sample_transactions.json",
-    "etl:scheduler": "python etl/scheduler.py"
+    "etl:scheduler": "python etl/scheduler.py",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
