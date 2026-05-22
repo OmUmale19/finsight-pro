@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { computeBudgetUsage, runWhatIfSimulation, summarizeTransactions } from "@/lib/finance";
 
@@ -10,6 +10,14 @@ const transactions = [
 ];
 
 describe("finance helpers", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-04-15"));
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
   it("summarizes spend, income, and category totals", () => {
     const summary = summarizeTransactions(transactions);
 

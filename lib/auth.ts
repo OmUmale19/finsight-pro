@@ -4,7 +4,8 @@ import { prisma } from "@/lib/db";
 import { getCurrentSession } from "@/lib/session";
 
 export async function hashPassword(password: string) {
-  return bcrypt.hash(password, 12);
+  const saltRounds = process.env.NODE_ENV === "test" ? 4 : 12;
+  return bcrypt.hash(password, saltRounds);
 }
 
 export async function verifyPassword(password: string, hashedPassword: string) {

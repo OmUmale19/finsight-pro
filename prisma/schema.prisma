@@ -7,29 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UploadSource {
-  CSV
-  GOOGLE_SHEET
-  API
-}
-
-enum TransactionType {
-  DEBIT
-  CREDIT
-}
-
-enum PipelineStatus {
-  RUNNING
-  SUCCESS
-  FAILED
-}
-
-enum AlertSeverity {
-  INFO
-  WARNING
-  CRITICAL
-}
-
 model User {
   id              String           @id @default(cuid())
   name            String
@@ -51,8 +28,8 @@ model User {
 model RawTransaction {
   id          String       @id @default(cuid())
   userId      String       @map("user_id")
-  source      UploadSource
-  rawJson     Json         @map("raw_json")
+  source      String
+  rawJson     String       @map("raw_json")
   fileName    String?      @map("file_name")
   uploadedAt  DateTime     @default(now()) @map("uploaded_at")
   pipelineLog PipelineLog? @relation(fields: [pipelineLogId], references: [id])
@@ -73,11 +50,11 @@ model Transaction {
   normalizedCategory String?         @map("normalized_category")
   merchant           String
   description        String?
-  type               TransactionType
-  source             UploadSource
+  type               String
+  source             String
   isRecurring        Boolean         @default(false) @map("is_recurring")
   isAnomaly          Boolean         @default(false) @map("is_anomaly")
-  metadata           Json?
+  metadata           String?
   createdAt          DateTime        @default(now()) @map("created_at")
   updatedAt          DateTime        @updatedAt @map("updated_at")
   user               User            @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -92,9 +69,9 @@ model Insight {
   userId         String   @unique @map("user_id")
   financialScore Int      @map("financial_score")
   persona        String
-  flags          Json
-  summaryJson    Json     @map("summary_json")
-  explanation    Json
+  flags          String
+  summaryJson    String   @map("summary_json")
+  explanation    String
   updatedAt      DateTime @updatedAt @map("updated_at")
   createdAt      DateTime @default(now()) @map("created_at")
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -132,13 +109,13 @@ model Goal {
 model PipelineLog {
   id            String         @id @default(cuid())
   userId        String         @map("user_id")
-  source        UploadSource?
-  status        PipelineStatus
+  source        String?
+  status        String
   startedAt     DateTime       @default(now()) @map("started_at")
   finishedAt    DateTime?      @map("finished_at")
   rowsProcessed Int            @default(0) @map("rows_processed")
   errorMessage  String?        @map("error_message")
-  metadata      Json?
+  metadata      String?
   user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   rawTransactions RawTransaction[]
 
@@ -152,9 +129,9 @@ model Alert {
   title     String
   message   String
   type      String
-  severity  AlertSeverity
+  severity  String
   isRead    Boolean       @default(false) @map("is_read")
-  metadata  Json?
+  metadata  String?
   createdAt DateTime      @default(now()) @map("created_at")
   user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 

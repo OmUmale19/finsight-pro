@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
-import { PrismaClient, TransactionType, UploadSource } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import { TransactionType, UploadSource } from "../lib/prisma-enums";
 
 const prisma = new PrismaClient();
 
@@ -128,17 +129,17 @@ async function main() {
     update: {
       financialScore: 72,
       persona: "Balanced",
-      flags: {
+      flags: JSON.stringify({
         recurringCount: 1,
         anomalyCount: 1,
         wasteSignals: ["Shopping exceeded comfort threshold this month."]
-      },
-      explanation: [
+      }),
+      explanation: JSON.stringify([
         "Savings rate is healthy relative to monthly income.",
         "Budget adherence is mixed because shopping spend spiked.",
         "Essential categories still dominate most of the monthly outflow."
-      ],
-      summaryJson: {
+      ]),
+      summaryJson: JSON.stringify({
         financial_health_score: 72,
         persona: "Balanced",
         explanation: [
@@ -174,23 +175,23 @@ async function main() {
           Groceries: 3100
         },
         month_totals: [{ month: "2026-04", total: 19568 }]
-      }
+      })
     },
     create: {
       userId: user.id,
       financialScore: 72,
       persona: "Balanced",
-      flags: {
+      flags: JSON.stringify({
         recurringCount: 1,
         anomalyCount: 1,
         wasteSignals: ["Shopping exceeded comfort threshold this month."]
-      },
-      explanation: [
+      }),
+      explanation: JSON.stringify([
         "Savings rate is healthy relative to monthly income.",
         "Budget adherence is mixed because shopping spend spiked.",
         "Essential categories still dominate most of the monthly outflow."
-      ],
-      summaryJson: {
+      ]),
+      summaryJson: JSON.stringify({
         financial_health_score: 72,
         persona: "Balanced",
         explanation: [
@@ -226,7 +227,7 @@ async function main() {
           Groceries: 3100
         },
         month_totals: [{ month: "2026-04", total: 19568 }]
-      }
+      })
     }
   });
 

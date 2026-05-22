@@ -1,4 +1,4 @@
-import { PipelineStatus, UploadSource } from "@prisma/client";
+import { PipelineStatus, UploadSource } from "@/lib/prisma-enums";
 
 import { fail, ok } from "@/lib/api";
 import { requireUser } from "@/lib/auth";

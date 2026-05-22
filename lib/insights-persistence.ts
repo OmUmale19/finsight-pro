@@ -1,4 +1,6 @@
-import { AlertSeverity, Prisma, TransactionType, UploadSource } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+
+import { AlertSeverity, TransactionType, UploadSource } from "@/lib/prisma-enums";
 
 import { prisma } from "@/lib/db";
 
@@ -33,16 +35,16 @@ type InsightsPayload = {
 
 function normalizeSource(source?: string): UploadSource {
   if (source === "GOOGLE_SHEET") {
-    return "GOOGLE_SHEET";
+    return "GOOGLE_SHEET" as UploadSource;
   }
   if (source === "API") {
-    return "API";
+    return "API" as UploadSource;
   }
-  return "CSV";
+  return "CSV" as UploadSource;
 }
 
 function normalizeType(type?: string): TransactionType {
-  return type === "CREDIT" ? "CREDIT" : "DEBIT";
+  return (type === "CREDIT" ? "CREDIT" : "DEBIT") as TransactionType;
 }
 
 export async function persistPipelineResults({
@@ -67,7 +69,7 @@ export async function persistPipelineResults({
   const rawEntries = rawRows.map((row) => ({
     userId,
     source,
-    rawJson: row as Prisma.InputJsonValue,
+    rawJson: JSON.stringify(row),
     fileName,
     pipelineLogId
   }));
@@ -85,7 +87,7 @@ export async function persistPipelineResults({
     source: normalizeSource(transaction.source),
     isRecurring: Boolean(transaction.is_recurring),
     isAnomaly: Boolean(transaction.is_anomaly),
-    metadata: (transaction.metadata ?? {}) as Prisma.InputJsonValue
+    metadata: JSON.stringify(transaction.metadata ?? {})
   }));
 
   await prisma.$transaction(async (tx) => {
@@ -111,24 +113,24 @@ export async function persistPipelineResults({
         userId,
         financialScore: insights.financial_health_score,
         persona: insights.persona,
-        flags: {
+        flags: JSON.stringify({
           wasteSignals: insights.waste_signals,
           recurringCount: insights.recurring_expenses.length,
           anomalyCount: insights.anomalies.length
-        },
-        explanation: insights.explanation,
-        summaryJson: insights
+        }),
+        explanation: JSON.stringify(insights.explanation),
+        summaryJson: JSON.stringify(insights)
       },
       update: {
         financialScore: insights.financial_health_score,
         persona: insights.persona,
-        flags: {
+        flags: JSON.stringify({
           wasteSignals: insights.waste_signals,
           recurringCount: insights.recurring_expenses.length,
           anomalyCount: insights.anomalies.length
-        },
-        explanation: insights.explanation,
-        summaryJson: insights
+        }),
+        explanation: JSON.stringify(insights.explanation),
+        summaryJson: JSON.stringify(insights)
       }
     });
 
@@ -155,7 +157,7 @@ export async function persistPipelineResults({
         message: `${anomaly.merchant}: INR ${Math.round(anomaly.amount)} on ${anomaly.date}`,
         type: "anomaly",
         severity: "CRITICAL" as AlertSeverity,
-        metadata: anomaly as unknown as Prisma.InputJsonValue
+        metadata: JSON.stringify(anomaly)
       })),
       ...insights.waste_signals.map((message) => ({
         userId,
