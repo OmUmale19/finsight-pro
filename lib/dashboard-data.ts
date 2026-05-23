@@ -36,7 +36,7 @@ export async function getDashboardData(userId: string) {
     date: tx.date,
     category: tx.category,
     merchant: tx.merchant,
-    type: tx.type
+    type: tx.type as "DEBIT" | "CREDIT"
   }));
 
   const summary = summarizeTransactions(normalizedTransactions);
@@ -44,7 +44,7 @@ export async function getDashboardData(userId: string) {
     transactions.map((tx) => ({
       amount: tx.amount,
       category: tx.category,
-      type: tx.type,
+      type: tx.type as "DEBIT" | "CREDIT",
       date: tx.date
     })),
     budgets.map((budget) => ({
@@ -75,7 +75,7 @@ export async function getDashboardData(userId: string) {
       category: transaction.category,
       amount: transaction.amount,
       date: transaction.date.toISOString(),
-      type: transaction.type,
+      type: transaction.type as "DEBIT" | "CREDIT",
       isAnomaly: transaction.isAnomaly,
       isRecurring: transaction.isRecurring
     }))
