@@ -65,7 +65,7 @@ export default async function DashboardPage() {
                 <p className="text-sm text-muted-foreground">Add budgets to start monitoring category overspend risk.</p>
               ) : (
                 data.budgetUsage.map((budget) => (
-                  <div key={budget.category} className="space-y-2 rounded-2xl border bg-slate-50 p-4">
+                  <div key={budget.category} className="space-y-2 rounded-2xl border border-border/60 bg-muted/40 p-4">
                     <div className="flex items-center justify-between gap-4">
                       <div>
                         <p className="font-medium">{budget.category}</p>
@@ -109,7 +109,7 @@ export default async function DashboardPage() {
                   <p className="text-sm text-muted-foreground">No active alerts right now.</p>
                 ) : (
                   data.alerts.map((alert) => (
-                    <div key={alert.id} className="rounded-2xl border bg-slate-50 p-4">
+                    <div key={alert.id} className="rounded-2xl border border-border/60 bg-muted/40 p-4">
                       <div className="flex items-center justify-between gap-4">
                         <p className="font-medium">{alert.title}</p>
                         <Badge variant={alert.severity === "CRITICAL" ? "danger" : "warning"}>{alert.severity}</Badge>
@@ -126,7 +126,7 @@ export default async function DashboardPage() {
 
       {insightSummary ? null : (
         <Card className="border-dashed border-primary/40 bg-primary/5">
-          <CardContent className="p-6 text-sm text-slate-700">
+          <CardContent className="p-6 text-sm text-foreground/70">
             Upload a CSV or Google Sheet on the Upload Data page to run the ETL pipeline and unlock insights, anomalies, recurring expenses, and forecasting.
           </CardContent>
         </Card>

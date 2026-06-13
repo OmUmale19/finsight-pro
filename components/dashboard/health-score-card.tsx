@@ -34,7 +34,7 @@ export function HealthScoreCard({
               Persona: {persona}
             </p>
           </div>
-          <div className="rounded-3xl bg-slate-50 p-4 text-sm text-muted-foreground">
+          <div className="rounded-3xl bg-muted/60 p-4 text-sm text-muted-foreground">
             {score >= 70 ? <TrendingUp className="mb-2 h-5 w-5 text-emerald-500" /> : <TrendingDown className="mb-2 h-5 w-5 text-amber-500" />}
             Track this over time to see if your spending discipline is strengthening.
           </div>

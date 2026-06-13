@@ -49,7 +49,7 @@ export default async function InsightsPage() {
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {summary.smart_insights?.map((item: string) => (
-                    <div key={item} className="rounded-2xl border bg-slate-50 p-4 text-sm text-slate-700">
+                    <div key={item} className="rounded-2xl border border-border/60 bg-muted/40 p-4 text-sm text-foreground">
                       {item}
                     </div>
                   ))}
@@ -108,7 +108,7 @@ export default async function InsightsPage() {
                     <p className="text-sm text-muted-foreground">No recurring patterns detected yet.</p>
                   ) : (
                     summary.recurring_expenses.map((item: { merchant: string; amount: number; cadence: string }) => (
-                      <div key={`${item.merchant}-${item.amount}`} className="rounded-2xl border bg-slate-50 p-4">
+                      <div key={`${item.merchant}-${item.amount}`} className="rounded-2xl border border-border/60 bg-muted/40 p-4">
                         <div className="flex items-center justify-between gap-4">
                           <div>
                             <p className="font-medium">{item.merchant}</p>

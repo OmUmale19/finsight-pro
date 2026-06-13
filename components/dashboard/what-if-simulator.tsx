@@ -47,7 +47,7 @@ export function WhatIfSimulator({
       <CardContent className="space-y-6">
         <div className="grid gap-4">
           {scenarios.map((scenario, index) => (
-            <div key={scenario.category} className="rounded-3xl border bg-slate-50 p-4">
+            <div key={scenario.category} className="rounded-3xl border border-border/60 bg-muted/40 p-4">
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <p className="font-medium">{scenario.category}</p>

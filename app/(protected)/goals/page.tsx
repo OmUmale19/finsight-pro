@@ -49,7 +49,7 @@ export default async function GoalsPage() {
                 <p className="text-sm text-muted-foreground">No budgets created yet.</p>
               ) : (
                 data.budgetUsage.map((budget) => (
-                  <div key={budget.category} className="rounded-3xl border bg-slate-50 p-5">
+                  <div key={budget.category} className="rounded-3xl border border-border/60 bg-muted/40 p-5">
                     <div className="flex items-center justify-between gap-4">
                       <div>
                         <p className="font-medium">{budget.category}</p>
@@ -79,7 +79,7 @@ export default async function GoalsPage() {
                 <p className="text-sm text-muted-foreground">No savings goals created yet.</p>
               ) : (
                 data.goalProgress.map((goal) => (
-                  <div key={goal.name} className="rounded-3xl border bg-slate-50 p-5">
+                  <div key={goal.name} className="rounded-3xl border border-border/60 bg-muted/40 p-5">
                     <div className="flex items-center justify-between gap-4">
                       <div>
                         <p className="font-medium">{goal.name}</p>

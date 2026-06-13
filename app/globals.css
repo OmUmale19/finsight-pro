@@ -33,14 +33,14 @@
     --primary-foreground: 210 40% 98%;
     --secondary: 173 66% 38%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 223 47% 12%;
+    --muted: 223 47% 14%;
     --muted-foreground: 215 20% 65%;
     --accent: 38 92% 54%;
     --accent-foreground: 218 35% 12%;
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
+    --border: 216 34% 26%;
+    --input: 216 34% 26%;
     --ring: 198 90% 42%;
   }
 

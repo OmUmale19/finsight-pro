@@ -25,6 +25,14 @@ export async function requireUser() {
       id: true,
       name: true,
       email: true,
+      avatarUrl: true,
+      jobTitle: true,
+      company: true,
+      location: true,
+      bio: true,
+      emailNotifications: true,
+      weeklyDigest: true,
+      productUpdates: true,
       createdAt: true
     }
   });

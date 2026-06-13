@@ -75,7 +75,7 @@ export function UploadPanel() {
               onClick={() => setSourceType(id)}
               className={cn(
                 "rounded-3xl border p-4 text-left transition",
-                sourceType === id ? "border-primary bg-primary/5 shadow-sm" : "bg-white hover:bg-slate-50"
+                sourceType === id ? "border-primary bg-primary/5 shadow-sm" : "bg-card hover:bg-muted/60 dark:border-white/10"
               )}
             >
               <Icon className="mb-3 h-5 w-5 text-primary" />

@@ -9,6 +9,7 @@ export type SessionPayload = {
   userId: string;
   email: string;
   name: string;
+  avatarUrl?: string | null;
 };
 
 const secret = new TextEncoder().encode(env.JWT_SECRET);

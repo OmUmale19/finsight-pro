@@ -40,7 +40,7 @@ export default async function UploadPage() {
               <p className="text-sm text-muted-foreground">No ETL runs yet. Upload data to create your first pipeline log.</p>
             ) : (
               data.pipelineLogs.map((log) => (
-                <div key={log.id} className="rounded-3xl border bg-slate-50 p-5">
+                <div key={log.id} className="rounded-3xl border border-border/60 bg-muted/40 p-5">
                   <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center">
                     <div>
                       <p className="font-medium">

@@ -20,10 +20,10 @@ export async function GET(request: Request) {
         ? {
             OR: [
               {
-                merchant: { contains: search, mode: "insensitive" }
+                merchant: { contains: search }
               },
               {
-                description: { contains: search, mode: "insensitive" }
+                description: { contains: search }
               }
             ]
           }

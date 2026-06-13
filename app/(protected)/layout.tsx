@@ -12,6 +12,16 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
   }
 
   return (
-    <AppShell user={{ name: user.name, email: user.email }}>{children}</AppShell>
+    <AppShell
+      user={{
+        name: user.name,
+        email: user.email,
+        avatarUrl: user.avatarUrl,
+        jobTitle: user.jobTitle,
+        company: user.company
+      }}
+    >
+      {children}
+    </AppShell>
   );
 }

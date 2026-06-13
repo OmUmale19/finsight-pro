@@ -58,11 +58,11 @@ export function TransactionTable({ transactions }: { transactions: TransactionRo
           </thead>
           <tbody>
             {filteredTransactions.map((transaction) => (
-              <tr key={transaction.id} className="border-b border-slate-100 text-sm">
-                <td className="py-4 font-medium text-slate-900">{transaction.merchant}</td>
+              <tr key={transaction.id} className="border-b border-border text-sm">
+                <td className="py-4 font-medium text-foreground">{transaction.merchant}</td>
                 <td className="py-4 text-muted-foreground">{transaction.category}</td>
                 <td className="py-4 text-muted-foreground">{new Date(transaction.date).toLocaleDateString("en-IN")}</td>
-                <td className="py-4 font-medium text-slate-900">{formatCurrency(transaction.amount)}</td>
+                <td className="py-4 font-medium text-foreground">{formatCurrency(transaction.amount)}</td>
                 <td className="py-4">
                   <div className="flex flex-wrap gap-2">
                     <Badge variant={transaction.type === "DEBIT" ? "neutral" : "secondary"}>{transaction.type}</Badge>

@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -11,6 +11,14 @@ model User {
   id              String           @id @default(cuid())
   name            String
   email           String           @unique
+  avatarUrl       String?          @map("avatar_url")
+  jobTitle        String?          @map("job_title")
+  company         String?
+  location        String?
+  bio             String?
+  emailNotifications Boolean       @default(true) @map("email_notifications")
+  weeklyDigest    Boolean          @default(true) @map("weekly_digest")
+  productUpdates  Boolean          @default(false) @map("product_updates")
   passwordHash    String           @map("password_hash")
   createdAt       DateTime         @default(now()) @map("created_at")
   updatedAt       DateTime         @updatedAt @map("updated_at")
