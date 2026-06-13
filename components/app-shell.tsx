@@ -43,7 +43,7 @@ export function AppShell({
             </div>
           </div>
 
-          <nav className="flex-1 space-y-2 overflow-y-auto pr-1">
+          <nav className="space-y-2 pb-4">
             {navItems.map(({ href, label, icon: Icon }) => {
               const active = currentPath === href;
               return (
@@ -64,7 +64,7 @@ export function AppShell({
             })}
           </nav>
 
-          <div className="mt-6 shrink-0 rounded-3xl border border-border bg-muted/50 p-4">
+          <div className="mt-auto shrink-0 rounded-3xl border border-border bg-muted/50 p-4">
             <div className="mb-4 flex items-center justify-between">
               <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Workspace</p>
               <ThemeToggle />
@@ -83,10 +83,7 @@ export function AppShell({
               </div>
             </div>
 
-            <div className="mt-4 flex flex-wrap gap-3">
-              <Button variant="outline" asChild>
-                <Link href="/profile">Manage profile</Link>
-              </Button>
+            <div className="mt-4">
               <AccountMenu />
             </div>
           </div>
