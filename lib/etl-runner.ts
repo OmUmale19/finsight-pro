@@ -3,11 +3,35 @@ import path from "node:path";
 import { spawn } from "node:child_process";
 
 import { env } from "@/lib/env";
+import { runJavaScriptPipeline } from "@/lib/js-pipeline";
 
 type PythonResult<T> = {
   output: T;
   stderr: string;
 };
+
+function shouldUseJavaScriptPipeline() {
+  return process.env.VERCEL === "1" || process.env.FORCE_JS_PIPELINE === "1";
+}
+
+function shouldFallbackToJavaScript(error: unknown) {
+  if (shouldUseJavaScriptPipeline()) {
+    return true;
+  }
+
+  if (!(error instanceof Error)) {
+    return false;
+  }
+
+  const message = error.message.toLowerCase();
+  return (
+    message.includes("spawn") ||
+    message.includes("enoent") ||
+    message.includes("python") ||
+    message.includes("not found") ||
+    message.includes("no such file")
+  );
+}
 
 async function runPythonScript<T>(scriptPath: string, args: string[]): Promise<PythonResult<T>> {
   return new Promise((resolve, reject) => {
@@ -53,6 +77,16 @@ export async function runPipeline<TTransactions, TInsights>({
   rawRows: unknown[];
   budgets: Array<{ category: string; limit: number }>;
 }) {
+  if (shouldUseJavaScriptPipeline()) {
+    return runJavaScriptPipeline({
+      rawRows,
+      budgets
+    }) as {
+      pipelineOutput: TTransactions;
+      insightsOutput: TInsights;
+    };
+  }
+
   const tempDir = path.resolve(env.ETL_TEMP_DIR);
   await mkdir(tempDir, { recursive: true });
 
@@ -65,24 +99,38 @@ export async function runPipeline<TTransactions, TInsights>({
   await writeFile(budgetsPath, JSON.stringify(budgets, null, 2), "utf8");
 
   try {
-    const { output: pipelineOutput } = await runPythonScript<TTransactions>(path.resolve("etl", "etl_pipeline.py"), [
-      "--input",
-      rawPath
-    ]);
+    try {
+      const { output: pipelineOutput } = await runPythonScript<TTransactions>(path.resolve("etl", "etl_pipeline.py"), [
+        "--input",
+        rawPath
+      ]);
 
-    await writeFile(cleanedPath, JSON.stringify(pipelineOutput, null, 2), "utf8");
+      await writeFile(cleanedPath, JSON.stringify(pipelineOutput, null, 2), "utf8");
 
-    const { output: insightsOutput } = await runPythonScript<TInsights>(path.resolve("etl", "insights_engine.py"), [
-      "--input",
-      cleanedPath,
-      "--budgets",
-      budgetsPath
-    ]);
+      const { output: insightsOutput } = await runPythonScript<TInsights>(path.resolve("etl", "insights_engine.py"), [
+        "--input",
+        cleanedPath,
+        "--budgets",
+        budgetsPath
+      ]);
 
-    return {
-      pipelineOutput,
-      insightsOutput
-    };
+      return {
+        pipelineOutput,
+        insightsOutput
+      };
+    } catch (error) {
+      if (!shouldFallbackToJavaScript(error)) {
+        throw error;
+      }
+
+      return runJavaScriptPipeline({
+        rawRows,
+        budgets
+      }) as {
+        pipelineOutput: TTransactions;
+        insightsOutput: TInsights;
+      };
+    }
   } finally {
     await Promise.allSettled([rm(rawPath, { force: true }), rm(cleanedPath, { force: true }), rm(budgetsPath, { force: true })]);
   }

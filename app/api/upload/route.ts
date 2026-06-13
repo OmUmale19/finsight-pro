@@ -30,7 +30,11 @@ export async function POST(request: Request) {
 
       const buffer = Buffer.from(await file.arrayBuffer());
       fileName = file.name;
-      await storeUploadedFile(user.id, file.name, buffer);
+      try {
+        await storeUploadedFile(user.id, file.name, buffer);
+      } catch (error) {
+        console.warn("Skipping raw upload archive for this request.", error);
+      }
       rawRows = await parseCsvContent(buffer.toString("utf8"), "csv");
       source = UploadSource.CSV;
     } else if (sourceType === "google-sheet") {
