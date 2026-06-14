@@ -15,7 +15,7 @@ export function AccountMenu() {
   }
 
   return (
-    <Button variant="outline" onClick={handleLogout} className="w-full">
+    <Button variant="outline" size="sm" onClick={handleLogout} className="w-full justify-center rounded-2xl">
       <LogOut className="mr-2 h-4 w-4" />
       Logout
     </Button>

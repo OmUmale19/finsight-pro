@@ -9,7 +9,6 @@ import { AccountMenu } from "@/components/account-menu";
 import { ProfileAvatar } from "@/components/profile-avatar";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -32,18 +31,18 @@ export function AppShell({
   return (
     <div className="min-h-screen bg-transparent">
       <div className="container grid min-h-screen gap-6 py-6 lg:grid-cols-[280px_minmax(0,1fr)]">
-        <aside className="flex flex-col rounded-[2rem] border border-border bg-card/80 p-5 shadow-soft backdrop-blur lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:overflow-hidden">
-          <div className="mb-8 space-y-3">
+        <aside className="flex flex-col gap-5 rounded-[2rem] border border-border bg-card/80 p-5 shadow-soft backdrop-blur lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:overflow-hidden">
+          <div className="space-y-2">
             <Badge>FinSight Pro</Badge>
             <div>
-              <h1 className="font-heading text-2xl font-semibold text-foreground">Expense intelligence</h1>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+              <h1 className="font-heading text-xl font-semibold text-foreground">Expense intelligence</h1>
+              <p className="mt-2 text-sm leading-5 text-muted-foreground">
                 ETL, scoring, anomaly alerts, forecasting, and budget planning in one workspace.
               </p>
             </div>
           </div>
 
-          <nav className="space-y-2 pb-4">
+          <nav className="space-y-2">
             {navItems.map(({ href, label, icon: Icon }) => {
               const active = currentPath === href;
               return (
@@ -51,7 +50,7 @@ export function AppShell({
                   key={href}
                   href={href}
                   className={cn(
-                    "flex items-center rounded-2xl px-4 py-3 text-sm font-medium transition",
+                    "flex items-center rounded-2xl px-4 py-2.5 text-sm font-medium transition",
                     active 
                       ? "bg-primary text-primary-foreground shadow-lg" 
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -64,14 +63,18 @@ export function AppShell({
             })}
           </nav>
 
-          <div className="mt-auto shrink-0 rounded-3xl border border-border bg-muted/50 p-4">
-            <div className="mb-4 flex items-center justify-between">
+          <div className="mt-auto shrink-0 rounded-3xl border border-border bg-muted/50 p-3.5">
+            <div className="mb-3 flex items-center justify-between gap-3">
               <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Workspace</p>
               <ThemeToggle />
             </div>
 
-            <div className="flex items-start gap-3">
-              <ProfileAvatar name={user.name} avatarUrl={user.avatarUrl} />
+            <div className="flex items-center gap-3">
+              <ProfileAvatar
+                name={user.name}
+                avatarUrl={user.avatarUrl}
+                className="h-12 w-12 rounded-2xl object-cover"
+              />
               <div className="min-w-0 flex-1">
                 <p className="truncate font-medium text-foreground">{user.name}</p>
                 <p className="truncate text-sm text-muted-foreground">{user.email}</p>
@@ -83,7 +86,7 @@ export function AppShell({
               </div>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-3">
               <AccountMenu />
             </div>
           </div>
