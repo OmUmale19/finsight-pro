@@ -115,7 +115,7 @@ export function TransactionTable({ transactions }: { transactions: TransactionRo
               groupedTransactions.map((group) => (
                 <Fragment key={group.monthKey}>
                   <tr className="border-b border-border/60">
-                    <td colSpan={5} className="bg-muted/25 py-3 text-sm font-semibold text-foreground">
+                    <td colSpan={5} className="bg-muted/25 py-4 text-lg font-bold tracking-wide text-foreground">
                       {group.monthLabel}
                     </td>
                   </tr>
