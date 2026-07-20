@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 
 describe("Google OAuth Configuration & State Constants", () => {
   it("exports correct OAuth state cookie name", async () => {
-    const { OAUTH_STATE_COOKIE } = await import("@/app/api/auth/google/route");
+    const { OAUTH_STATE_COOKIE } = await import("@/lib/constants");
     expect(OAUTH_STATE_COOKIE).toBe("g_oauth_state");
   });
 

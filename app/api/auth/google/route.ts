@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-export const OAUTH_STATE_COOKIE = "g_oauth_state";
+import { OAUTH_STATE_COOKIE } from "@/lib/constants";
 
 export async function GET() {
   const clientId = process.env.GOOGLE_CLIENT_ID;

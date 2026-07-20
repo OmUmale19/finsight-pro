@@ -2,7 +2,13 @@ import Link from "next/link";
 
 import { AuthForm } from "@/components/forms/auth-form";
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const params = await searchParams;
+
   return (
     <main className="container flex min-h-screen items-center justify-center py-16">
       <div className="grid w-full max-w-6xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
@@ -18,7 +24,7 @@ export default function LoginPage() {
             New here? <Link href="/signup" className="font-medium text-primary hover:underline">Create an account</Link>
           </p>
         </section>
-        <AuthForm mode="login" />
+        <AuthForm mode="login" initialError={params.error} />
       </div>
     </main>
   );

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/db";
 import { signAuthToken, setAuthCookie } from "@/lib/session";
-import { OAUTH_STATE_COOKIE } from "../route";
+import { OAUTH_STATE_COOKIE } from "@/lib/constants";
 
 interface GoogleTokenResponse {
   access_token?: string;

@@ -1,4 +1,5 @@
 export const APP_NAME = "FinSight Pro";
+export const OAUTH_STATE_COOKIE = "g_oauth_state";
 
 export const CATEGORY_RULES = [
   { matchers: ["swiggy", "zomato", "ubereats"], category: "Food" },
