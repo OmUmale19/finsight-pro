@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       where: { email: parsed.data.email.toLowerCase() }
     });
 
-    if (!user) {
+    if (!user || !user.passwordHash) {
       return fail("Invalid email or password", 401);
     }
 

@@ -31,9 +31,13 @@ export async function PATCH(request: Request) {
     const shouldChangePassword = parsed.data.currentPassword.length > 0 || parsed.data.newPassword.length > 0;
 
     if (shouldChangePassword) {
-      const isValidPassword = await verifyPassword(parsed.data.currentPassword, currentUser.passwordHash);
-      if (!isValidPassword) {
-        return fail("Current password is incorrect", 400);
+      if (currentUser.passwordHash) {
+        const isValidPassword = await verifyPassword(parsed.data.currentPassword, currentUser.passwordHash);
+        if (!isValidPassword) {
+          return fail("Current password is incorrect", 400);
+        }
+      } else {
+        // If user has no password set (OAuth user), we allow setting a new password directly without current password verification
       }
     }
 

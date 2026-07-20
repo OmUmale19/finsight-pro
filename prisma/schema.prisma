@@ -19,7 +19,7 @@ model User {
   emailNotifications Boolean       @default(true) @map("email_notifications")
   weeklyDigest    Boolean          @default(true) @map("weekly_digest")
   productUpdates  Boolean          @default(false) @map("product_updates")
-  passwordHash    String           @map("password_hash")
+  passwordHash    String?          @map("password_hash")
   createdAt       DateTime         @default(now()) @map("created_at")
   updatedAt       DateTime         @updatedAt @map("updated_at")
   rawTransactions RawTransaction[]
