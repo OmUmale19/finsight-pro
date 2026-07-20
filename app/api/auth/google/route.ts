@@ -5,7 +5,7 @@ import { OAUTH_STATE_COOKIE } from "@/lib/constants";
 
 export async function GET() {
   const clientId = process.env.GOOGLE_CLIENT_ID;
-  const appUrl = process.env.APP_URL ?? "http://localhost:3000";
+  const appUrl = process.env.APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
   if (!clientId || clientId === "your-google-client-id") {
     return NextResponse.redirect(new URL("/login?error=Google OAuth is not configured", appUrl));
