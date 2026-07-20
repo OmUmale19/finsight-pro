@@ -59,7 +59,7 @@ export async function GET(req: NextRequest) {
       code,
       client_id: clientId,
       client_secret: clientSecret,
-      redirect_uri: `${appUrl}/api/auth/google/callback`,
+      redirect_uri: `${appUrl}/api/auth/callback/google`,
       grant_type: "authorization_code",
     };
 
